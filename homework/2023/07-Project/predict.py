@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify
 import preprocess
 import load_model as model
 
-app = Flask("web_api")
+app = Flask("predict")
 print("testing::::::::::::::::::::::::")
 
 @app.route('/home', methods=['GET'])

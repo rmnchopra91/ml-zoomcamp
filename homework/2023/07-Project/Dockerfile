@@ -12,8 +12,8 @@ RUN mkdir -p /artifacts
 
 COPY ["artifacts/*", "./artifacts/"]
 
-COPY ["preprocess.py", "load_model.py", "web_api.py", "./"]
+COPY ["preprocess.py", "load_model.py", "predict.py", "./"]
 
 EXPOSE 9696
 
-ENTRYPOINT ["waitress-serve", "--listen=0.0.0.0:9696", "web_api:app"]
+ENTRYPOINT ["waitress-serve", "--listen=0.0.0.0:9696", "predict:app"]
