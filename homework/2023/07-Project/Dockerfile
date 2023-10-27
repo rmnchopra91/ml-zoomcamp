@@ -16,4 +16,4 @@ COPY ["preprocess.py", "load_model.py", "web_api.py", "./"]
 
 EXPOSE 9696
 
-ENTRYPOINT ["waitress-serve", "--listen=127.0.0.1:9696", "web_api:app"]
+ENTRYPOINT ["waitress-serve", "--listen=0.0.0.0:9696", "web_api:app"]
