@@ -1,6 +1,6 @@
 # Predict Term Deposit [Kaggle Link](https://www.kaggle.com/datasets/aslanahmedov/predict-term-deposit)
 
-![Predict Term Deposit](./images/dataset-cover.png)
+![Predict Term Deposit](./docs/dataset.png)
 
 ## Table of Contents:
 1. [Problem description](#1-problem-description)
@@ -63,6 +63,98 @@ In this project, we want to train a model on this dataset in order to predict wh
   * We can split it now into train/test/val
   * If our data is imbalance we can use data augmentation/ resample on train data
 
+## Data Visualization
+![Model deployment](./docs/dv1.png)
+![Model deployment](./docs/dv2.png)
+
+## 3. Model train and Save Model [notebook](./notebook.ipynb)
+  * Split Dataframe into `train`, `val` and `test`
+  * Preprocess dataset
+  * Get evaluation matrix for multiple models
+  * Choose Best model based on `evaluation matrics`
+  * Save best model
+
+## 4. Export notebook to .py file
+  Logic for taining a model is exported to a script file [train.py](./train.py) file
+
+## 5. Model deployment
+  Model is deployed by using `Flask` web framework. Write Flask code into [predict.py](./predict.py) file. It will launch web server at below url: 
+  [http://0.0.0.0:9696](http://0.0.0.0:9696)
+  
+  ![Model Deployment](./images/model_deployment.png)
+
+  Test this model by runing [test.py](test.py) file. Here we have two examples. 
+
+## 6. Dependency and enviroment management
+
+Install `pipenv` into your machine
+```bash
+pip install pipenv
+```
+
+Set the python version which you want to use
+```bash
+pipenv install --python 3.10
+```
+
+Install all the dependencies mentioned in [Pipfile](./Pipfile)
+```bash
+pipenv install
+```
+
+Come to `pipenv shell`
+```bash
+pipenv shell
+```
+
+Now you can execute commands for training a model, generating predictions by using web framework like `Flask`, `fastAPI`
+
+## 7. Containerization
+
+* [Dockerfile](./Dockerfile)
+* Start Docker Desktop
+![docker desktop](./images/8_docker_desktop.png)
+
+* Build docker image. [ref](https://github.com/DataTalksClub/machine-learning-zoomcamp/blob/master/05-deployment/06-docker.md)
+```bash
+docker build -t bank-term-deposite:latest .
+```
+![Docker Build](./images/8_docker_build.png)
+
+* Run the docker image. (Before runing docker image we have to stop already runiing web server at 9696 port)
+```bash
+docker run -it -p 9696:9696 bank-term-deposite:latest
+```
+![Docker Run](./images/8_docker_run.png)
+
+* Docker Test by running [predict-test.py](./predict-test.py) file
+![Docker Test](./images/8_docker_test.png)
+
+* Push docker image to docker hub container registry
+  * From Google Chrome
+    * Login to docker hub [link](https://hub.docker.com/)
+    * Create repository `bank-term-deposit`
+  * From terminal
+    * Docker Login
+    * Push docker image to docker hub
+    ```
+    docker login
+
+    docker push dineshchopra/bank-term-deposit:latest
+    ```
+  ![Docker push](./images/8_docker_push.png)
+  ![Docker Hub repository](./images/8_docker_repository.png)
+
+  * Pull docker image and run it
+  ```
+  docker pull dineshchopra/bank-term-deposit:latest
+  ```
+  * Run docker image, which is pulled from docker hub
+  ```
+  docker run -it -p 9696:9696 dineshchopra/bank-term-deposit:latest
+  ```
+
+<!-- 
 Important Docer commands
 
 Docker related commands
@@ -88,4 +180,4 @@ Steps to run the complete project.
 prerequisites:
     start docker deamon in your system
 Step 1: docker pull rmnchopra91/term-predict-app:latest
-Step 2: docker run -it -p 9696:9696 rmnchopra91/term-predict-app:latest
+Step 2: docker run -it -p 9696:9696 rmnchopra91/term-predict-app:latest -->
