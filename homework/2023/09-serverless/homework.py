@@ -1,5 +1,6 @@
 from tensorflow.keras.models import load_model
-import tensorflow.lite as tflite
+# import tensorflow.lite as tflite
+import tflite_runtime.interpreter as tflite
 import tensorflow as tf
 
 from io import BytesIO
@@ -70,6 +71,7 @@ def test_predict(image= "https://habrastorage.org/webt/rt/d9/dh/rtd9dhsmhwrdezel
     return X
 
 def lambda_handler(event, context):
+    print("Lambda is running ")
     url = event['url']
     pred = test_predict(url)
     result = {
